@@ -1,8 +1,10 @@
 # config valid only for Capistrano 3.1
 lock '3.1.0'
 
-set :application, 'my_app_name'
-set :repo_url, 'git@example.com:me/my_repo.git'
+set :application, 'danielkasper.net'
+set :repo_url, 'git@github.com:dankasper/home.git'
+set :scm, :git
+set :deploy_to, '/srv/home'
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
