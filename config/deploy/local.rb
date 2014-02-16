@@ -1,1 +1,1 @@
-role :app, %w{localhost}
+ENV['LOCAL_ONLY'] = 'true'
