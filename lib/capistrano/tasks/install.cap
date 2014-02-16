@@ -2,8 +2,9 @@ namespace :install do
   task :nginx do
     on roles(:app) do |host|
       execute <<-COMMAND
-        cd install/nginx
-	./configure -p #{fetch(:deploy_to)}
+        cd #{current_path}/install/nginx-1.4.4
+        chmod 700 configure
+	./configure --prefix=#{deploy_to} --without-http_rewrite_module
 	make
 	make install
       COMMAND
