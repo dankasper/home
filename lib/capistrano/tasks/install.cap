@@ -1,0 +1,12 @@
+namespace :install do
+  task :nginx do
+    on roles(:app) do |host|
+      execute <<-COMMAND
+        cd install/nginx
+	./configure -p #{fetch(:deploy_to)}
+	make
+	make install
+      COMMAND
+    end  
+  end
+end
