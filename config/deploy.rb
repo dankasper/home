@@ -9,6 +9,12 @@ set :default_env, path:   "#{deploy_to}/sbin:#{deploy_to}/go/bin",
 
 namespace :deploy do
 
+  before :stop_nginx, :update_config do
+    on roles(:app) do
+      cp "#{current_path}/config/nginx.conf", "#{deploy_to}/conf"
+    end
+  end
+
   before :restart, :stop_nginx do
     on roles(:app) do
       execute <<-COMMAND
