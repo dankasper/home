@@ -5,6 +5,8 @@ set :application, 'danielkasper.net'
 set :repo_url, 'git@github.com:dankasper/home.git'
 set :scm, :git
 set :deploy_to, '/srv/home'
+set :default_env, path:   "#{deploy_to}/sbin:#{deploy_to}/go/bin:$PATH",
+                  goroot: "#{deploy_to}/go"
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
@@ -41,8 +43,9 @@ namespace :deploy do
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
-      # Your restart mechanism here, for example:
-      # execute :touch, release_path.join('tmp/restart.txt')
+      within fetch(:deploy_to) do
+        execute 'sbin/nginx'
+      end
     end
   end
 
