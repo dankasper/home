@@ -2,8 +2,8 @@
 lock '3.1.0'
 
 set :application, 'danielkasper.net'
-set :repo_url, 'git@github.com:dankasper/home.git'
-set :deploy_to, '/srv/home'
+set :repo_url,    'git@github.com:dankasper/home.git'
+set :deploy_to,   '/srv/home'
 set :default_env, path:   "#{deploy_to}/sbin:#{deploy_to}/go/bin",
                   goroot: "#{deploy_to}/go"
 
