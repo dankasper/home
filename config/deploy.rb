@@ -4,18 +4,18 @@ lock '3.1.0'
 set :application, 'danielkasper.net'
 set :repo_url,    'git@github.com:dankasper/home.git'
 set :deploy_to,   '/srv/home'
-set :default_env, path:   "#{deploy_to}/sbin:#{deploy_to}/go/bin",
+set :default_env, path:   "#{deploy_to}/sbin:#{deploy_to}/go/bin:$PATH",
                   goroot: "#{deploy_to}/go"
 
 namespace :deploy do
 
-  before :stop_nginx, :update_config do
+  task :update_config do
     on roles(:app) do
-      cp "#{current_path}/config/nginx.conf", "#{deploy_to}/conf"
+      execute :cp, "#{current_path}/config/nginx.conf", "#{deploy_to}/conf"
     end
   end
 
-  before :restart, :stop_nginx do
+  task :stop_nginx do
     on roles(:app) do
       execute <<-COMMAND
         cd #{deploy_to}
@@ -25,9 +25,10 @@ namespace :deploy do
       COMMAND
     end
   end
+  before :stop_nginx, :update_config
 
   desc 'Restart application'
-  task :restart do
+  task :restart => :stop_nginx do
     on roles(:app) do
       within fetch(:deploy_to) do
         execute 'nginx'
