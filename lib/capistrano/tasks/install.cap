@@ -10,4 +10,13 @@ namespace :install do
       COMMAND
     end  
   end
+
+  task :go do
+    on roles(:app) do |host|
+      execute <<-COMMAND
+        cd #{current_path}/install
+        tar -C #{deploy_to} -xzf go1.2.linux-amd64.tar.gz
+      COMMAND
+    end
+  end
 end
