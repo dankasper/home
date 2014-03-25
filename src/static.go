@@ -9,7 +9,7 @@ import (
 // replace with a real http.Handler
 type FastCGIServer struct{}
 
-func (s FastCGIServer) ServeHTTP(resp http.responseWriter, req *http.Request) {
+func (s FastCGIServer) ServeHTTP(resp http.ResponseWriter, req *http.Request) {
     resp.Write([]byte("<h1>Hello World</h1>"))
 }
 
