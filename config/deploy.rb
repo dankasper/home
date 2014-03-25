@@ -30,9 +30,7 @@ namespace :deploy do
   desc 'Restart application'
   task :restart => :stop_nginx do
     on roles(:app) do
-      within fetch(:current_path) do
-	execute 'go', 'run', 'src/static.go'
-      end
+      execute 'go', 'run', "#{current_path}/src/static.go"
       within fetch(:deploy_to) do
         execute 'nginx'
       end
