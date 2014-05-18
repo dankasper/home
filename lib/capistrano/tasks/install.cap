@@ -2,7 +2,7 @@ def retrieve_lib name, repo, branch
   execute <<-COMMAND
     cd #{deploy_to}/dependencies
     rm -rf #{name}
-    git clone {"-b #{branch}" if branch} #{repo} #{name}
+    git clone #{"-b #{branch}" if branch} #{repo} #{name}
   COMMAND
 end
 
