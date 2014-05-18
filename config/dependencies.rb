@@ -1,5 +1,5 @@
 set :dependencies, { 'nginx' => {
-                       :repo_url => 'git@github.com/nginx/nginx.git',
+                       :repo_url => 'https://github.com/nginx/nginx.git',
 	               :branch   => 'nginx-1.6',
 		       :script   => "/srv/home/current/install/nginx.sh"
                      },
