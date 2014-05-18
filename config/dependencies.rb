@@ -4,7 +4,7 @@ set :dependencies, { 'nginx' => {
 		       :script   => "#{current_path}/install/nginx.sh"
                      },
                      'go' => {
-                       :source_dir => "#{current_path}/install"
+                       :source_dir => "#{current_path}/install",
                        :script     => "#{current_path}/install/go.sh"
                      }
                    }
