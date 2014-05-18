@@ -1,10 +1,8 @@
-def retrieve_lib name, repo, branch = 'master'
+def retrieve_lib name, repo, branch
   execute <<-COMMAND
-    cd #{deploy_to}/dependencies/#{name}
-    git init
-    git remote add origin #{repo}
-    git fetch origin
-    git checkout -b #{branch}
+    cd #{deploy_to}/dependencies
+    rm -rf #{name}
+    git clone {"-b #{branch}" if branch} #{repo} #{name}
   COMMAND
 end
 
