@@ -15,7 +15,7 @@ namespace :install do
           retrieve_lib lib_name, repo, install_tasks[:branch]
         end
         if script = install_tasks[:script]
-          source_dir = install_tasks[:source_dir] || current_path
+          source_dir = install_tasks[:source_dir] || "#{deploy_to}/dependencies"
           execute :bash, script, source_dir, deploy_to
         end
       end
