@@ -1,22 +1,26 @@
-namespace :install do
-  task :nginx do
-    on roles(:app) do |host|
-      execute <<-COMMAND
-        cd #{current_path}/install/nginx-1.4.4
-        chmod 700 configure
-	./configure --prefix=#{deploy_to} --without-http_rewrite_module
-	make
-	make install
-      COMMAND
-    end  
-  end
+def retrieve_lib name, repo_url, branch
+  execute <<-COMMAND
+    cd #{deploy_to}/dependencies
+    git clone #{"-b #{branch}" if branch} #{repo_url} #{name}
+  COMMAND
+end
 
-  task :go do
-    on roles(:app) do |host|
-      execute <<-COMMAND
-        cd #{current_path}/install
-        tar -C #{deploy_to} -xzf go1.2.linux-amd64.tar.gz
-      COMMAND
+namespace :install do
+  task :lib, :lib_name do |t, args|
+    lib_name = args[:lib_name]
+    install_tasks = fetch(:dependencies, {})[lib_name]
+    if install_tasks
+      on roles(:app) do
+        if repo = install_tasks[:repo_url]
+          retrieve_lib lib_name, repo_url, install_tasks[:branch]
+        end
+        if script = install_tasks[:script]
+          source_dir = install_tasks[:source_dir] || current_path
+          execute :bash, script, source_dir, deploy_to
+        end
+      end
+    else
+      puts "No install tasks defined for #{libname}"
     end
   end
 end
