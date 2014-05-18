@@ -19,9 +19,9 @@ namespace :deploy do
     on roles(:app) do
       execute <<-COMMAND
         cd #{deploy_to}
-	if [ -f logs/nginx.pid ]
-    	  then sbin/nginx -s stop
-	fi
+        if [ -f logs/nginx.pid ]
+           then sbin/nginx -s stop
+        fi
       COMMAND
     end
   end
