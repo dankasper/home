@@ -1,7 +1,7 @@
-def retrieve_lib name, repo_url, branch
+def retrieve_lib name, repo, branch
   execute <<-COMMAND
     cd #{deploy_to}/dependencies
-    git clone #{"-b #{branch}" if branch} #{repo_url} #{name}
+    git clone #{"-b #{branch}" if branch} #{repo} #{name}
   COMMAND
 end
 
@@ -12,7 +12,7 @@ namespace :install do
     if install_tasks
       on roles(:app) do
         if repo = install_tasks[:repo_url]
-          retrieve_lib lib_name, repo_url, install_tasks[:branch]
+          retrieve_lib lib_name, repo, install_tasks[:branch]
         end
         if script = install_tasks[:script]
           source_dir = install_tasks[:source_dir] || current_path
